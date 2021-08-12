@@ -26,6 +26,7 @@ app.use("/questions", questionRoutes);
 app.use("/rooms", roomRoutes);
 app.use("/users", userRoutes);
 
+//for media
 app.use("/media", express.static("media"));
 
 // Middleware
