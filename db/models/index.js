@@ -47,7 +47,7 @@ db.Sequelize = Sequelize;
 db.Question.hasMany(db.Answer, {
   foreignKey: "questionId",
   as: "answers",
-  aloowNull: false,
+  allowNull: false,
 });
 
 db.Answer.belongsTo(db.Question, { foreignKey: "questionId" });
@@ -56,7 +56,7 @@ db.Answer.belongsTo(db.Question, { foreignKey: "questionId" });
 db.Choice.hasMany(db.Answer, {
   foreignKey: "choiceId",
   as: "answers",
-  aloowNull: false,
+  allowNull: false,
 });
 
 db.Answer.belongsTo(db.Choice, { foreignKey: "choiceId" });
@@ -65,7 +65,7 @@ db.Answer.belongsTo(db.Choice, { foreignKey: "choiceId" });
 db.User.hasMany(db.Answer, {
   foreignKey: "userId",
   as: "answers",
-  aloowNull: false,
+  allowNull: false,
 });
 
 db.Answer.belongsTo(db.User, { foreignKey: "userId" });

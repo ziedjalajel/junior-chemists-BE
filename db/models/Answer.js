@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     models.Room.hasMany(Answer, {
       foreignKey: "roomId",
       as: "answers",
-      alloNull: false,
+      allowNull: false,
     });
 
     Answer.belongsTo(models.Room, { foreignKey: "roomId" });
