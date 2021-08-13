@@ -1,4 +1,4 @@
-const { Question } = require("../db/models");
+const { Question, Choice, Answer } = require("../db/models");
 
 exports.questionFetch = async (questionId, next) => {
   try {
@@ -21,9 +21,33 @@ exports.questionCreate = async (req, res, next) => {
   }
 };
 
+//this is for the one to many relation between the question and choice
+exports.choiceCreate = async (req, res, next) => {
+  try {
+    req.body.questionId = req.question.id;
+    const newChoice = await Choice.create(req.body);
+    res.status(201).json(newChoice);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.questionList = async (req, res, next) => {
   try {
-    const questions = await Question.findAll({});
+    const questions = await Question.findAll({
+      include: [
+        {
+          model: Choice,
+          as: "choices",
+          attributes: ["id"],
+        },
+        {
+          model: Answer,
+          as: "answers",
+          attributes: ["id"],
+        },
+      ],
+    });
     res.json(questions);
   } catch (error) {
     next(error);

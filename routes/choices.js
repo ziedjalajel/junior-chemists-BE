@@ -3,7 +3,6 @@ const router = express.Router();
 
 const {
   choiceFetch,
-  choiceCreate,
   choiceList,
   choiceDetail,
 } = require("../controllers/choiceController");
@@ -23,7 +22,5 @@ router.param("choiceId", async (req, res, next, choiceId) => {
 router.get("/", choiceList);
 
 router.get("/:choiceId", choiceDetail);
-
-router.post("/", choiceCreate);
 
 module.exports = router;

@@ -3,7 +3,6 @@ const router = express.Router();
 
 const {
   answerFetch,
-  answerCreate,
   answerList,
   answerDetail,
 } = require("../controllers/answerController");
@@ -23,7 +22,5 @@ router.param("answerId", async (req, res, next, answerId) => {
 router.get("/", answerList);
 
 router.get("/:answerId", answerDetail);
-
-router.post("/", answerCreate);
 
 module.exports = router;
