@@ -39,7 +39,6 @@ exports.questionList = async (req, res, next) => {
         {
           model: Choice,
           as: "choices",
-          attributes: ["id"],
         },
         {
           model: Answer,
