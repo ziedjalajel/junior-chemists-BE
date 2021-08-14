@@ -20,6 +20,9 @@ exports.roomFetch = async (roomId, next) => {
 //create room
 exports.roomCreate = async (req, res, next) => {
   try {
+    req.body.name = `wej5ol3mh${Math.floor(
+      Math.random() * 100
+    )}werplbnqae${Math.floor(Math.random() * 1000)}vge`;
     const newRoom = await Room.create(req.body);
     res.status(201).json(newRoom);
   } catch (error) {
