@@ -60,7 +60,6 @@ exports.roomList = async (req, res, next) => {
 exports.roomDetail = async (req, res) => res.json(req.room);
 
 //the method for the many-to-many relation between the question table and the room table(the Question_room through table)
-
 exports.questionRoom = async (req, res, next) => {
   try {
     const question_room = req.body.map((connect) => ({
@@ -78,7 +77,6 @@ exports.questionRoom = async (req, res, next) => {
 };
 
 //the method for the many-to-many relation between the user table and the room table(the User_room through table)
-
 exports.userRoom = async (req, res, next) => {
   try {
     const user_room = req.body.map((connect) => ({
