@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     isTrue: {
       type: DataTypes.BOOLEAN,
     },
+    point: {
+      type: DataTypes.INTEGER,
+    },
   });
 
   Choice.associate = (models) => {

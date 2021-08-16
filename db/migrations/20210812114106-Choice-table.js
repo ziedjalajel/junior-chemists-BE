@@ -13,6 +13,8 @@ module.exports = {
 
       isTrue: Sequelize.BOOLEAN,
 
+      point: Sequelize.BOOLEAN,
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
