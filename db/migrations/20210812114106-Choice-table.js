@@ -13,7 +13,7 @@ module.exports = {
 
       isTrue: Sequelize.BOOLEAN,
 
-      point: Sequelize.BOOLEAN,
+      point: Sequelize.INTEGER,
 
       createdAt: {
         allowNull: false,
