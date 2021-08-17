@@ -6,6 +6,20 @@ module.exports = (sequelize, DataTypes) => {
     isTrue: {
       type: DataTypes.BOOLEAN,
     },
+    point: {
+      type: DataTypes.INTEGER,
+    },
   });
+
+  Choice.associate = (models) => {
+    models.Question.hasMany(Choice, {
+      foreignKey: "questionId",
+      as: "choices",
+      allowNull: false,
+    });
+
+    Choice.belongsTo(models.Question, { foreignKey: "questionId" });
+  };
+
   return Choice;
 };

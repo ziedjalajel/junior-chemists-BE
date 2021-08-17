@@ -7,6 +7,7 @@ const {
   questionCreate,
   questionList,
   questionDetail,
+  choiceCreate,
 } = require("../controllers/questionController");
 
 router.param("questionId", async (req, res, next, questionId) => {
@@ -26,5 +27,7 @@ router.get("/", questionList);
 router.get("/:questionId", questionDetail);
 
 router.post("/", upload.single("image"), questionCreate);
+
+router.post("/:questionId/choices", choiceCreate);
 
 module.exports = router;

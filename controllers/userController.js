@@ -1,4 +1,4 @@
-const { User } = require("../db/models");
+const { User, Answer } = require("../db/models");
 
 exports.userFetch = async (userId, next) => {
   try {
@@ -20,7 +20,13 @@ exports.userCreate = async (req, res, next) => {
 
 exports.userList = async (req, res, next) => {
   try {
-    const users = await User.findAll({});
+    const users = await User.findAll({
+      include: {
+        model: Answer,
+        as: "answers",
+        attributes: ["id"],
+      },
+    });
     res.json(users);
   } catch (error) {
     next(error);
@@ -28,3 +34,12 @@ exports.userList = async (req, res, next) => {
 };
 
 exports.userDetail = async (req, res) => res.json(req.user);
+
+exports.userUpdate = async (req, res, next) => {
+  try {
+    const updateUser = await req.user.update(req.body);
+    res.status(201).json(updateUser);
+  } catch (error) {
+    next(error);
+  }
+};

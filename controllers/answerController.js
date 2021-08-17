@@ -9,15 +9,6 @@ exports.answerFetch = async (answerId, next) => {
   }
 };
 
-exports.answerCreate = async (req, res, next) => {
-  try {
-    const newAnswer = await Answer.create(req.body);
-    res.status(201).json(newAnswer);
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.answerList = async (req, res, next) => {
   try {
     const answers = await Answer.findAll({});

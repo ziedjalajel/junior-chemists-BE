@@ -6,6 +6,9 @@ const {
   roomCreate,
   roomList,
   roomDetail,
+  questionRoom,
+  userRoom,
+  answerCreate,
 } = require("../controllers/roomController");
 
 router.param("roomId", async (req, res, next, roomId) => {
@@ -25,5 +28,11 @@ router.get("/", roomList);
 router.get("/:roomId", roomDetail);
 
 router.post("/", roomCreate);
+
+router.post("/:roomId/questionroom", questionRoom);
+
+router.post("/:roomId/userroom", userRoom);
+
+router.post("/:roomId/:questionId/:choiceId/:userId", answerCreate);
 
 module.exports = router;

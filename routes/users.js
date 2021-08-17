@@ -6,6 +6,7 @@ const {
   userCreate,
   userList,
   userDetail,
+  userUpdate,
 } = require("../controllers/userController");
 
 router.param("userId", async (req, res, next, userId) => {
@@ -25,5 +26,7 @@ router.get("/", userList);
 router.get("/:userId", userDetail);
 
 router.post("/", userCreate);
+
+router.put("/:userId", userUpdate);
 
 module.exports = router;
