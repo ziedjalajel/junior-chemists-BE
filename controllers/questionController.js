@@ -1,4 +1,5 @@
 const { Question, Choice, Answer } = require("../db/models");
+const Sequelize = require("sequelize");
 
 exports.questionFetch = async (questionId, next) => {
   try {
@@ -35,6 +36,9 @@ exports.choiceCreate = async (req, res, next) => {
 exports.questionList = async (req, res, next) => {
   try {
     const questions = await Question.findAll({
+      // order: Sequelize.literal("random()"),
+      // limit: 2,
+
       include: [
         {
           model: Choice,
