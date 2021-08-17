@@ -34,3 +34,12 @@ exports.userList = async (req, res, next) => {
 };
 
 exports.userDetail = async (req, res) => res.json(req.user);
+
+exports.userUpdate = async (req, res, next) => {
+  try {
+    const updateUser = await req.user.update(req.body);
+    res.status(201).json(updateUser);
+  } catch (error) {
+    next(error);
+  }
+};
