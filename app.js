@@ -12,6 +12,9 @@ const questionRoutes = require("./routes/questions");
 const roomRoutes = require("./routes/rooms");
 const userRoutes = require("./routes/users");
 
+//data
+const { Room } = require("./db/models");
+
 //cors
 const cors = require("cors");
 
@@ -41,6 +44,10 @@ io.on("connection", (socket) => {
 
     //io.to(room).emit("startRoom",questions)
   });
+});
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello World" });
 });
 
 // Middleware
