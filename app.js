@@ -1,7 +1,6 @@
 const express = require("express");
 const http = require("http");
-// Database
-const db = require("./db/models");
+
 //socketio
 const socketio = require("socket.io");
 
@@ -13,7 +12,7 @@ const roomRoutes = require("./routes/rooms");
 const userRoutes = require("./routes/users");
 
 //data
-const { Room } = require("./db/models");
+const { Room, User, User_room } = require("./db/models");
 
 //cors
 const cors = require("cors");
@@ -38,17 +37,49 @@ app.use("/users", userRoutes);
 app.use("/media", express.static("media"));
 
 io.on("connection", (socket) => {
-  socket.on("joinRoom", async ({ username, room }) => {
-    socket.join(room);
-    console.log(username, room);
+  socket.on("joinRoom", async ({ username }) => {
+    // req.body.name = (Math.random() + 1).toString(36).substring(2);
+    // const newRoom = await Room.create(req.body);
+    const newUser = await User.create({ username });
 
-    //io.to(room).emit("startRoom",questions)
+    const checkrooms = await Room.findAll({
+      include: [
+        {
+          model: User,
+          as: "users",
+        },
+      ],
+    });
+    const myRoom = checkrooms.find((room) => room.users.length < 5);
+
+    console.log(myRoom.id);
+    //add to through table
+    await User_room.create({ roomId: myRoom.id, userId: newUser.id });
+
+    // const addUsersToRomm =
+    socket.join(myRoom.id);
+
+    if (myRoom.users.length === 4) {
+      io.to(myRoom.id).emit("startRoom");
+    }
   });
 });
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello World" });
 });
+
+// app.post("/room", async (req, res, next) => {
+//   try {
+//     req.body.name = `wej5ol3mh${Math.floor(
+//       Math.random() * 100
+//     )}werplbnqae${Math.floor(Math.random() * 1000)}vge`;
+//     const newRoom = await Room.create(req.body);
+//     res.status(201).json(newRoom);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 // Middleware
 app.use((req, res, next) => {

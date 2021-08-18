@@ -23,6 +23,7 @@ exports.roomCreate = async (req, res, next) => {
     // req.body.name = `wej5ol3mh${Math.floor(
     //   Math.random() * 100
     // )}werplbnqae${Math.floor(Math.random() * 1000)}vge`;
+    req.body.name = (Math.random() + 1).toString(36).substring(2);
     const newRoom = await Room.create(req.body);
     res.status(201).json(newRoom);
   } catch (error) {
