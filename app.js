@@ -51,16 +51,26 @@ io.on("connection", (socket) => {
       ],
     });
     const myRoom = checkrooms.find((room) => room.users.length < 5);
+    const users = [];
+    users.push(newUser.id);
+
+    console.log(users);
 
     console.log(myRoom.id);
     //add to through table
     await User_room.create({ roomId: myRoom.id, userId: newUser.id });
 
+    socket.emit("roomLength", myRoom.users.length);
+
     // const addUsersToRomm =
     socket.join(myRoom.id);
-
+    socket.emit("newUser", newUser);
     if (myRoom.users.length === 4) {
-      io.to(myRoom.id).emit("startRoom");
+      io.to(myRoom.id).emit("startRoom", {
+        users: myRoom.users.map((u) => u.username),
+
+        myRoom,
+      });
     }
   });
 });
