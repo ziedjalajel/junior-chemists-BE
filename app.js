@@ -50,27 +50,42 @@ io.on("connection", (socket) => {
         },
       ],
     });
-    const myRoom = checkrooms.find((room) => room.users.length < 5);
-    const users = [];
-    users.push(newUser.id);
+    const myRoom = checkrooms.find((room) => room.users.length < 3);
 
-    console.log(users);
+    socket.emit("roomLength", myRoom.users.length);
 
     console.log(myRoom.id);
     //add to through table
     await User_room.create({ roomId: myRoom.id, userId: newUser.id });
 
-    socket.emit("roomLength", myRoom.users.length);
+    const updatedRoom = await Room.findOne({
+      where: { id: myRoom.id },
+      include: [
+        {
+          model: User,
+          as: "users",
+        },
+      ],
+    });
+
+    console.log(updatedRoom.users.map((u) => u.username));
 
     // const addUsersToRomm =
-    socket.join(myRoom.id);
+    socket.join(updatedRoom.id);
+    socket.emit("numberOfUsers", updatedRoom.users.length);
     socket.emit("newUser", newUser);
-    if (myRoom.users.length === 4) {
-      io.to(myRoom.id).emit("startRoom", {
-        users: myRoom.users.map((u) => u.username),
+    socket.emit(
+      "usernames",
+      updatedRoom.users.map((u) => u.username)
+    );
 
-        myRoom,
-      });
+    io.to(updatedRoom.id).emit("startRoom", {
+      users: updatedRoom.users.map((u) => u.username),
+      myRoom,
+    });
+
+    if (updatedRoom.users.length === 3) {
+      await Room.create();
     }
   });
 });
@@ -78,18 +93,6 @@ io.on("connection", (socket) => {
 app.get("/", (req, res) => {
   res.json({ message: "Hello World" });
 });
-
-// app.post("/room", async (req, res, next) => {
-//   try {
-//     req.body.name = `wej5ol3mh${Math.floor(
-//       Math.random() * 100
-//     )}werplbnqae${Math.floor(Math.random() * 1000)}vge`;
-//     const newRoom = await Room.create(req.body);
-//     res.status(201).json(newRoom);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 // Middleware
 app.use((req, res, next) => {
