@@ -84,14 +84,18 @@ io.on("connection", (socket) => {
       myRoom,
     });
 
+    io.to(updatedRoom.id).emit("result", {
+      users: updatedRoom.users.map((u) => u.username),
+      myRoom,
+    });
+
     if (updatedRoom.users.length === 3) {
       await Room.create();
     }
+    socket.on("resultEmit", () => {
+      socket.emit("test", updatedRoom);
+    });
   });
-});
-
-app.get("/", (req, res) => {
-  res.json({ message: "Hello World" });
 });
 
 // Middleware
