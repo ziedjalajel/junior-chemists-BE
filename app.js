@@ -97,7 +97,6 @@ io.on("connection", (socket) => {
 
       //this is for the score of the users
       socket.on("score", async (userScore, userId) => {
-        // console.log("the user id is", specificUser);
         const value = { score: userScore };
         const options = { multi: false };
         const addScore = await User.update(
@@ -117,7 +116,6 @@ io.on("connection", (socket) => {
         });
 
         io.to(bringScores.id).emit("usersScores", bringScores.users);
-        // console.log(bringScores.users);
       });
     });
   });
