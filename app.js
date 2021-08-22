@@ -12,7 +12,7 @@ const roomRoutes = require("./routes/rooms");
 const userRoutes = require("./routes/users");
 
 //data
-const { Room, User, User_room } = require("./db/models");
+const { Room, User, User_room, Answer } = require("./db/models");
 
 //cors
 const cors = require("cors");
@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
 
     socket.emit("roomLength", myRoom.users.length);
 
-    console.log(myRoom.id);
+    // console.log(myRoom.id);
     //add to through table
     await User_room.create({ roomId: myRoom.id, userId: newUser.id });
 
@@ -68,9 +68,8 @@ io.on("connection", (socket) => {
       ],
     });
 
-    console.log(updatedRoom.users.map((u) => u.username));
+    // console.log(updatedRoom.users.map((u) => u.username));
 
-    // const addUsersToRomm =
     socket.join(updatedRoom.id);
     socket.emit("numberOfUsers", updatedRoom.users.length);
     socket.emit("newUser", newUser);
@@ -84,16 +83,42 @@ io.on("connection", (socket) => {
       myRoom,
     });
 
-    io.to(updatedRoom.id).emit("result", {
-      users: updatedRoom.users.map((u) => u.username),
-      myRoom,
-    });
-
     if (updatedRoom.users.length === 3) {
       await Room.create();
     }
-    socket.on("resultEmit", () => {
-      socket.emit("test", updatedRoom);
+
+    // the result part
+
+    socket.on("myAnswers", (myAnswers) => {
+      //this is for sending the users answers
+      socket.on("resultEmit", () => {
+        socket.emit("create-connection", myAnswers, newUser.id);
+      });
+
+      //this is for the score of the users
+      socket.on("score", async (userScore, userId) => {
+        // console.log("the user id is", specificUser);
+        const value = { score: userScore };
+        const options = { multi: false };
+        const addScore = await User.update(
+          value,
+          { where: { id: userId } },
+          options
+        );
+
+        const bringScores = await Room.findOne({
+          where: { id: updatedRoom.id },
+          include: [
+            {
+              model: User,
+              as: "users",
+            },
+          ],
+        });
+
+        io.to(bringScores.id).emit("usersScores", bringScores.users);
+        // console.log(bringScores.users);
+      });
     });
   });
 });
