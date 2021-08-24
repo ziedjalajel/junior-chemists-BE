@@ -53,8 +53,6 @@ io.on("connection", (socket) => {
     });
     const myRoom = checkrooms.find((room) => room.users.length < 3);
 
-    socket.emit("roomLength", myRoom.users.length);
-
     // console.log(myRoom.id);
     //add to through table
     await User_room.create({ roomId: myRoom.id, userId: newUser.id });
@@ -168,6 +166,7 @@ io.on("connection", (socket) => {
 
     io.to(updatedPrivateRoom.id).emit("startPrivateRoom", {
       users: updatedPrivateRoom.users.map((u) => u.username),
+      usersIds: updatedPrivateRoom.users.map((u) => u.id),
       privateRoom: updatedPrivateRoom,
     });
 
