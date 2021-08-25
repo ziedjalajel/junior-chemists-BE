@@ -51,7 +51,9 @@ io.on("connection", (socket) => {
         },
       ],
     });
-    const myRoom = checkrooms.find((room) => room.users.length < 3);
+    const myRoom = checkrooms.find(
+      (room) => room.users.length < 3 && room.name === null
+    );
 
     // console.log(myRoom.id);
     //add to through table
