@@ -44,11 +44,11 @@ exports.questionList = async (req, res, next) => {
           model: Choice,
           as: "choices",
         },
-        {
-          model: Answer,
-          as: "answers",
-          attributes: ["id"],
-        },
+        // {
+        //   model: Answer,
+        //   as: "answers",
+        //   attributes: ["id"],
+        // },
       ],
     });
     res.json(questions);

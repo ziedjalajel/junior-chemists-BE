@@ -13,6 +13,11 @@ module.exports = {
 
       slug: Sequelize.STRING,
 
+      participant: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

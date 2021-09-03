@@ -35,9 +35,25 @@ exports.userList = async (req, res, next) => {
 
 exports.userDetail = async (req, res) => res.json(req.user);
 
+// exports.userUpdate = async (req, res, next) => {
+//   try {
+//     const value = { score: 30 };
+//     const updateUser = await req.user.update(value);
+//     res.status(201).json(updateUser);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 exports.userUpdate = async (req, res, next) => {
   try {
-    const updateUser = await req.user.update(req.body);
+    const value = { score: 50 };
+    const options = { multi: false };
+    const updateUser = await User.update(
+      value,
+      { where: { id: req.params.userId } },
+      options
+    );
     res.status(201).json(updateUser);
   } catch (error) {
     next(error);

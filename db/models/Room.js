@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     slug: {
       type: DataTypes.STRING,
     },
+    participant: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+    },
   });
 
   SequelizeSlugify.slugifyModel(Room, {

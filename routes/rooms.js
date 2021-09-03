@@ -9,6 +9,7 @@ const {
   questionRoom,
   userRoom,
   answerCreate,
+  lastRoom,
 } = require("../controllers/roomController");
 
 router.param("roomId", async (req, res, next, roomId) => {
@@ -24,6 +25,8 @@ router.param("roomId", async (req, res, next, roomId) => {
 });
 
 router.get("/", roomList);
+
+router.get("/the", lastRoom);
 
 router.get("/:roomId", roomDetail);
 

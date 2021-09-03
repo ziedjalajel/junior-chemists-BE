@@ -20,9 +20,7 @@ exports.roomFetch = async (roomId, next) => {
 //create room
 exports.roomCreate = async (req, res, next) => {
   try {
-    // req.body.name = `wej5ol3mh${Math.floor(
-    //   Math.random() * 100
-    // )}werplbnqae${Math.floor(Math.random() * 1000)}vge`;
+    // req.body.name = (Math.random() + 1).toString(36).substring(2);
     const newRoom = await Room.create(req.body);
     res.status(201).json(newRoom);
   } catch (error) {
@@ -30,7 +28,7 @@ exports.roomCreate = async (req, res, next) => {
   }
 };
 
-//room list
+// room list
 exports.roomList = async (req, res, next) => {
   try {
     const rooms = await Room.findAll({
@@ -58,6 +56,28 @@ exports.roomList = async (req, res, next) => {
 
 //room detail
 exports.roomDetail = async (req, res) => res.json(req.room);
+
+//last room
+exports.lastRoom = async (req, res, next) => {
+  try {
+    const rooms = await Room.findOne({
+      where: { name: req.body.name },
+      order: [["id", "DESC"]],
+    });
+    res.json(rooms);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// exports.lastRoom = async (req, res, next) => {
+//   try {
+//     const rooms = await Room.findOne({ order: [["id", "DESC"]] });
+//     res.json(rooms);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 //the method for the many-to-many relation between the question table and the room table(the Question_room through table)
 exports.questionRoom = async (req, res, next) => {
