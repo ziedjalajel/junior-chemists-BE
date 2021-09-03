@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "doadmin",
-    "password": "pcdgp2ggmo9p37n8",
-    "database": "defaultdb",
-    "host": "db-postgresql-blr1-62543-do-user-9743663-0.b.db.ondigitalocean.com",
+    "username": "postgres",
+    "password": "0000",
+    "database": "chemistry_db",
+    "host": "https://junior-chemists-be-bl7l7.ondigitalocean.app/",
     "dialect": "postgres",
     "logging": false
   },
