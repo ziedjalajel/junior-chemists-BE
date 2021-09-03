@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "0000",
-    "database": "chemistry_db",
-    "host": "127.0.0.1",
+    "username": "doadmin",
+    "password": "pcdgp2ggmo9p37n8",
+    "database": "defaultdb",
+    "host": "db-postgresql-blr1-62543-do-user-9743663-0.b.db.ondigitalocean.com",
     "dialect": "postgres",
     "logging": false
   },
