@@ -55,7 +55,6 @@ io.on("connection", (socket) => {
       (room) => room.users.length < 3 && room.name === null
     );
 
-    // console.log(myRoom.id);
     //add to through table
     await User_room.create({ roomId: myRoom.id, userId: newUser.id });
 
@@ -68,8 +67,6 @@ io.on("connection", (socket) => {
         },
       ],
     });
-
-    // console.log(updatedRoom.users.map((u) => u.username));
 
     socket.join(updatedRoom.id);
     socket.emit("numberOfUsers", updatedRoom.users.length);
