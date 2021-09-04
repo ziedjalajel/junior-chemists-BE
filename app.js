@@ -21,7 +21,7 @@ const app = express();
 
 const server = http.createServer(app);
 const io = socketio(server, {
-  cors: { origin: "https://junior-chemists-be-bl7l7.ondigitalocean.app/" },
+  cors: { origin: "https://junior-chemists.netlify.app/" },
 });
 
 app.use(cors());
