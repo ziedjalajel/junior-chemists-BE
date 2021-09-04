@@ -217,7 +217,7 @@ app.use((err, req, res, next) => {
 });
 
 const run = async () => {
-  //   await db.sequelize.sync();
+  await db.sequelize.sync();
   await server.listen(8080, () => {
     console.log("The application is running on localhost:8080");
   });
