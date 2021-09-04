@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-
+const db = require("./db/models");
 //socketio
 const socketio = require("socket.io");
 
